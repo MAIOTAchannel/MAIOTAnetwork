@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: MAIOTANetwork
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  web:
+    resources:
+      cache:
+        period: 0

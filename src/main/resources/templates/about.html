@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>About | MAIOTANetwork</title>
+</head>
+<body>
+
+<div class="container py-5">
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">About Me</h2>
+
+    <div class="row g-5">
+        <div class="col-md-8">
+            <p class="text-light leading-relaxed">
+                はじめまして。MAIOTANetworkの管理人です。<br>
+                普段はJavaを中心にソフトウェア開発を行っています。
+            </p>
+            <p class="text-secondary">
+                このサイトは、学習した技術のアウトプットや、自作した便利なツールを公開するために立ち上げました。<br>
+                「シンプル、高速、省コスト、かつ実用的」なものを目指して開発を続けています。
+            </p>
+
+            <h4 class="text-success mt-5 mb-3">Skills</h4>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless text-secondary">
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="w-25 text-light">Languages</th>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>Java (Main), Python, C++, HTML/CSS, SQL</li>
+                                <li>学習中：JavaScript, C#</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-light">Frameworks</th>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                <li>Java: 特になし</li>
+                                <li>Python: Django, Flask</li>
+                                <li>学習中：Spring Boot, Thymeleaf</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-light">Interests</th>
+                        <td>ネットワークプログラミング, アプリケーション開発</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

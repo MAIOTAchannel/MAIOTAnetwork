@@ -1,0 +1,19 @@
+/* 全体のフォントをテックっぽくする */
+body {
+    font-family: 'Roboto Mono', monospace;
+}
+
+/* リンクの色などを調整 */
+a {
+    text-decoration: none;
+}
+
+/* ナビゲーションのリンクホバー時 */
+.nav-link:hover {
+    color: #198754 !important; /* Spring Bootっぽい緑、またはハッカーっぽい緑 */
+}
+
+/* 漆黒の設定 */
+.bg-black {
+    background-color: #000000 !important;
+}

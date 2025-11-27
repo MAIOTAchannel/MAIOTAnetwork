@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>MAIOTANetwork</title>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="mb-5 border-bottom border-secondary pb-3">
+        <h2 class="fw-bold text-light">MAIOTANetwork<span class="text-success blink">_</span></h2>
+        <p class="text-secondary small mb-0">Personal Archive & Development Log</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <h5 class="text-success mb-3">
+                <i class="bi bi-clock-history"></i> System Updates
+            </h5>
+
+            <div class="list-group list-group-flush border-top border-secondary">
+
+                <div class="list-group-item bg-black text-light border-secondary py-4 px-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 text-light">サイトリニューアル</h5>
+                        <small class="text-secondary">2025-11-23</small>
+                    </div>
+                    <p class="mb-1 text-secondary">
+                        Spring Boot + Thymeleafで構成を刷新しました。
+                        デザインはBootstrap 5を使用し、ダークモードを基調としています。
+                    </p>
+                </div>
+
+                <div class="list-group-item bg-black text-light border-secondary py-4 px-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 text-light">開発中機能について</h5>
+                        <small class="text-secondary">2025-11-20</small>
+                    </div>
+                    <p class="mb-1 text-secondary">
+                        現在、JavaによるローカルOCR機能と、ネットワーク診断ツールの実装を進めています。
+                        <a href="/tools" class="text-success">Works/Tools</a> ページにて順次公開予定です。
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 d-none d-lg-block ps-5">
+            <div class="sticky-top" style="top: 2rem;">
+                <p class="text-secondary small">Quick Links</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/about" class="text-decoration-none text-light hover-green">→ Profile</a></li>
+                    <li class="mb-2"><a href="/tools" class="text-decoration-none text-light hover-green">→ Works</a></li>
+                    <li class="mb-2"><a href="https://github.com" target="_blank" class="text-decoration-none text-light hover-green">→ GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .blink { animation: blinker 1s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+    .hover-green:hover { color: #198754 !important; }
+</style>
+
+</body>
+</html>
