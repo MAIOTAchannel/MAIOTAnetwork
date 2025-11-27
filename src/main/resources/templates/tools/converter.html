@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>Universal Image Converter | MAIOTANetwork</title>
+</head>
+<style>
+    /* D&Dエリアのスタイル */
+    .border-dashed { border-style: dashed !important; }
+    .cursor-pointer { cursor: pointer; }
+    /* ホバー時のエフェクト */
+    #drop-zone.dragover {
+        border-color: #198754 !important; /* Success Green */
+        background-color: rgba(25, 135, 84, 0.1) !important;
+    }
+    /* タブのアクティブスタイル制御 */
+    .nav-link.active { color: #fff !important; border-bottom: 3px solid #198754 !important; }
+    .nav-link:not(.active):hover { color: #198754 !important; }
+</style>
+<body>
+
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/tools" class="text-secondary text-decoration-none hover-green">
+            <i class="bi bi-arrow-left"></i> Back to Works
+        </a>
+    </div>
+
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">
+        Universal Image Converter
+    </h2>
+    <p class="text-secondary mb-5">
+        ドラッグ＆ドロップ、またはURL指定で画像を変換します。<br>
+        <span class="small opacity-75">Supported Inputs: JPG, PNG, WebP, PDF, AI, PSD, TIFF, TGA, etc...</span>
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card bg-black border border-secondary shadow-lg">
+
+                <div class="card-header border-secondary bg-transparent p-0">
+                    <ul class="nav nav-tabs border-0" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active rounded-0 text-light bg-transparent border-0 border-bottom border-success border-3"
+                                    id="file-tab" data-bs-toggle="tab" data-bs-target="#file-pane" type="button" role="tab">
+                                <i class="bi bi-upload me-2"></i>File Upload
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link rounded-0 text-secondary bg-transparent border-0"
+                                    id="url-tab" data-bs-toggle="tab" data-bs-target="#url-pane" type="button" role="tab" onclick="activateTab(this)">
+                                <i class="bi bi-link-45deg me-2"></i>From URL
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body p-4">
+                    <form action="/tools/converter" method="post" enctype="multipart/form-data" id="convertForm">
+
+                        <div class="tab-content mb-4" id="myTabContent">
+
+                            <div class="tab-pane fade show active" id="file-pane" role="tabpanel">
+                                <div id="drop-zone" class="border border-2 border-secondary border-dashed rounded p-5 text-center cursor-pointer position-relative bg-dark bg-opacity-10">
+                                    <input type="file" name="file" id="fileInput" class="position-absolute top-0 start-0 w-100 h-100 opacity-0"
+                                           onchange="updateFileName(this)">
+                                    <div id="drop-content">
+                                        <i class="bi bi-cloud-arrow-up display-4 text-success mb-3"></i>
+                                        <h5 class="text-light">Drag & Drop file here</h5>
+                                        <p class="text-secondary small mb-0">or click to browse</p>
+                                    </div>
+                                    <div id="file-selected" class="d-none">
+                                        <i class="bi bi-file-earmark-check display-4 text-success mb-3"></i>
+                                        <h5 class="text-light text-break" id="fileNameDisplay">filename.jpg</h5>
+                                        <p class="text-success small mb-0">Ready to convert</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="url-pane" role="tabpanel">
+                                <label class="form-label text-light">Image URL</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-link"></i></span>
+                                    <input type="url" name="url" id="urlInput" class="form-control bg-black text-light border-secondary" placeholder="https://example.com/image.png">
+                                </div>
+                                <div class="form-text text-secondary">
+                                    Web上の画像のURLを直接入力してください。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-8">
+                                <label class="form-label text-light">Convert to...</label>
+                                <label>
+                                    <select name="format" class="form-select bg-dark text-light border-secondary">
+                                        <option th:each="fmt : ${formats}" th:value="${fmt}" th:text="${#strings.toUpperCase(fmt)}">JPG</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success fw-bold py-2">
+                                        CONVERT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ファイル名表示の更新
+    function updateFileName(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('drop-content').classList.add('d-none');
+            document.getElementById('file-selected').classList.remove('d-none');
+            document.getElementById('fileNameDisplay').textContent = input.files[0].name;
+        }
+    }
+
+    // ドラッグ＆ドロップのエフェクト制御
+    const dropZone = document.getElementById('drop-zone');
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.add('dragover');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('dragover');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        const fileInput = document.getElementById('fileInput');
+
+        // input[type=file]にドロップされたファイルをセット
+        fileInput.files = files;
+        updateFileName(fileInput);
+
+        // タブ切り替えロジック（ファイルタブを強制選択）
+        document.getElementById('file-tab').click();
+    });
+
+    // タブ切り替え時のスタイル制御（Bootstrap標準機能＋α）
+    const tabEl = document.getElementById('myTab')
+    tabEl.addEventListener('shown.bs.tab', function (event) {
+        event.target.classList.add('active', 'text-light', 'border-success', 'border-3');
+        event.target.classList.remove('text-secondary');
+
+        event.relatedTarget.classList.remove('active', 'text-light', 'border-success', 'border-3');
+        event.relatedTarget.classList.add('text-secondary');
+
+        // 入力値のクリア制御
+        if (event.target.id === 'file-tab') {
+            document.getElementById('urlInput').value = '';
+        } else {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('drop-content').classList.remove('d-none');
+            document.getElementById('file-selected').classList.add('d-none');
+        }
+    })
+</script>
+
+</body>
+</html>

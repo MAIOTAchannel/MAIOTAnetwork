@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>QR Code Generator | MAIOTANetwork</title>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/tools" class="text-secondary text-decoration-none hover-green">
+            <i class="bi bi-arrow-left"></i> Back to Works
+        </a>
+    </div>
+
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">
+        QR Code Generator
+    </h2>
+    <p class="text-secondary mb-5">
+        テキストやURLを入力して「Generate」ボタンを押すと、即座にQRコードを生成します。
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card bg-black border border-secondary shadow-lg">
+                <div class="card-body p-4">
+
+                    <form action="/tools/qrcode" method="post" class="mb-4">
+                        <div class="mb-3">
+                            <label for="inputText" class="form-label text-secondary small text-uppercase">Input Text / URL</label>
+                            <input type="text" class="form-control bg-dark text-light border-secondary"
+                                   id="inputText" name="inputText"
+                                   th:value="${inputText}" placeholder="https://..." required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success fw-bold">
+                                GENERATE QR CODE
+                            </button>
+                        </div>
+                    </form>
+
+                    <div th:if="${qrImage != null}" class="text-center border-top border-secondary pt-4 mt-4">
+                        <p class="text-success small mb-3">Generation Successful!</p>
+                        <div class="bg-white p-3 d-inline-block rounded">
+                            <img th:src="'data:image/png;base64,' + ${qrImage}" alt="QR Code" width="200">
+                        </div>
+                        <p class="text-secondary small mt-3 text-break" th:text="${inputText}"></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

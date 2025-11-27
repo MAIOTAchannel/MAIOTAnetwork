@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>Random String Generator | MAIOTANetwork</title>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/tools" class="text-secondary text-decoration-none hover-green">
+            <i class="bi bi-arrow-left"></i> Back to Works
+        </a>
+    </div>
+
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">
+        Random String Generator
+    </h2>
+    <p class="text-secondary mb-5">
+        セキュアなランダム文字列を生成します。パスワードやテストデータ作成にご利用ください。
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card bg-black border border-secondary shadow-lg">
+                <div class="card-body p-4">
+
+                    <form action="/tools/random-string" method="post" class="mb-4">
+
+                        <div class="mb-4">
+                            <label for="length" class="form-label text-light">Length (文字数)</label>
+                            <input type="number" class="form-control bg-dark text-light border-secondary w-25"
+                                   id="length" name="length" min="1" max="1024" th:value="${length}">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-light d-block">Options</label>
+
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="checkbox" id="useUpper" name="useUpper" th:checked="${useUpper}">
+                                <label class="form-check-label text-secondary" for="useUpper">A-Z (大文字)</label>
+                            </div>
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="checkbox" id="useLower" name="useLower" th:checked="${useLower}">
+                                <label class="form-check-label text-secondary" for="useLower">a-z (小文字)</label>
+                            </div>
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="checkbox" id="useNumber" name="useNumber" th:checked="${useNumber}">
+                                <label class="form-check-label text-secondary" for="useNumber">0-9 (数字)</label>
+                            </div>
+
+                            <div class="mt-2 p-3 bg-dark rounded border border-secondary">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="useSymbol" name="useSymbol" th:checked="${useSymbol}">
+                                    <label class="form-check-label text-secondary" for="useSymbol">Include Symbols (記号を含める)</label>
+                                </div>
+                                <div class="ms-4">
+                                    <label for="customSymbols" class="form-label text-secondary small">Custom Symbols (Optional)</label>
+                                    <input type="text" class="form-control form-control-sm bg-black text-light border-secondary"
+                                           id="customSymbols" name="customSymbols" th:value="${customSymbols}"
+                                           placeholder="Default: !@#$%^&*... (Leave empty to use default)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success fw-bold">
+                                GENERATE
+                            </button>
+                        </div>
+                    </form>
+
+                    <div th:if="${result != null}" class="mt-4 pt-4 border-top border-secondary">
+                        <label class="text-secondary small text-uppercase mb-2">Generated Result</label>
+                        <div class="input-group">
+                            <label for="resultBox">
+                                <input type="text" class="form-control bg-dark text-success font-monospace border-secondary"
+                                                          id="resultBox" th:value="${result}" readonly>
+                            </label>
+
+                            <button class="btn btn-outline-secondary text-light" type="button" id="copyBtn" onclick="copyToClipboard()">
+                                <i class="bi bi-clipboard"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("resultBox");
+        var copyBtn = document.getElementById("copyBtn");
+
+        // テキストを選択してコピー
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // モバイル対応
+
+        navigator.clipboard.writeText(copyText.value).then(function() {
+            // 成功時：ボタンの見た目を一時的に変更（アラートは出さない）
+            var originalText = copyBtn.innerHTML;
+
+            // ボタンを「Copied!」に変更し、色をSuccess(緑)にする
+            copyBtn.innerHTML = '<i class="bi bi-check-lg"></i> Copied!';
+            copyBtn.classList.remove('btn-outline-secondary', 'text-light');
+            copyBtn.classList.add('btn-success', 'text-white');
+
+            // 1.5秒後に元に戻す
+            setTimeout(function() {
+                copyBtn.innerHTML = originalText;
+                copyBtn.classList.remove('btn-success', 'text-white');
+                copyBtn.classList.add('btn-outline-secondary', 'text-light');
+            }, 1500);
+
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+</body>
+</html>
