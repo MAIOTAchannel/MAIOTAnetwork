@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import work.maiotanet.MAIOTANetwork.model.Post;
 import work.maiotanet.MAIOTANetwork.repository.PostRepository;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class BlogController {
@@ -48,7 +50,10 @@ public class BlogController {
 
   // 記事保存処理
   @PostMapping("/admin/post/save")
-  public String savePost(@ModelAttribute Post post) {
+  public String savePost(@ModelAttribute @Valid Post post, BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      return "admin/editor";
+    }
     postRepository.save(post);
     return "redirect:/admin";
   }

@@ -1,6 +1,7 @@
 package work.maiotanet.MAIOTANetwork.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -11,10 +12,12 @@ public class Post {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotBlank(message = "Title is required")
   private String title;
 
   // 長文を保存するためTEXT型を指定
   @Column(columnDefinition = "TEXT")
+  @NotBlank(message = "Content is required")
   private String content;
 
   private LocalDateTime createdAt;

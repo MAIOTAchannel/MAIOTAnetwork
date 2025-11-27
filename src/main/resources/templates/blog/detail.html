@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+
 <head>
     <title th:text="${post.title} + ' | MAIOTANetwork'">Post Title</title>
 </head>
+
 <body>
 
-<div class="container py-5">
-    <div class="mb-4">
-        <a href="/blog" class="text-secondary text-decoration-none hover-green">
-            <i class="bi bi-arrow-left"></i> Back to Blog
-        </a>
+    <div class="container py-5">
+        <div class="mb-4">
+            <a href="/blog" class="text-secondary text-decoration-none hover-green">
+                <i class="bi bi-arrow-left"></i> Back to Blog
+            </a>
+        </div>
+
+        <article class="col-lg-8 mx-auto">
+            <header class="mb-5 border-bottom border-secondary pb-4">
+                <h1 class="text-light fw-bold mb-3" th:text="${post.title}">Title</h1>
+                <div class="text-secondary small">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01</span>
+                </div>
+            </header>
+
+            <div id="raw-content" style="display: none;" th:text="${post.content}"></div>
+            <div id="rendered-content" class="text-light leading-relaxed"></div>
+        </article>
     </div>
 
-    <article class="col-lg-8 mx-auto">
-        <header class="mb-5 border-bottom border-secondary pb-4">
-            <h1 class="text-light fw-bold mb-3" th:text="${post.title}">Title</h1>
-            <div class="text-secondary small">
-                <i class="bi bi-calendar3 me-2"></i>
-                <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01</span>
-            </div>
-        </header>
-
-        <div class="text-light leading-relaxed" style="white-space: pre-wrap;" th:text="${post.content}">
-            Content body...
-        </div>
-    </article>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rawContent = document.getElementById('raw-content').textContent;
+            document.getElementById('rendered-content').innerHTML = marked.parse(rawContent);
+        });
+    </script>
 
 </body>
+
 </html>
