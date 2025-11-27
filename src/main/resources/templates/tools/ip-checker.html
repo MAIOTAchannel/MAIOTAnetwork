@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>IP Address Checker | MAIOTANetwork</title>
+</head>
+
+<style>
+    /* 文字間隔を少し広げてシステムっぽくする */
+    .ls-1 { letter-spacing: 1px; }
+</style>
+<body>
+
+<div class="container py-5">
+    <div class="mb-4">
+        <a href="/tools" class="text-secondary text-decoration-none hover-green">
+            <i class="bi bi-arrow-left"></i> Back to Works
+        </a>
+    </div>
+
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">
+        IP Address Checker
+    </h2>
+    <p class="text-secondary mb-5">
+        あなたのアクセス情報は以下の通りです。
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card bg-black border border-secondary shadow-lg">
+                <div class="card-header bg-transparent border-secondary text-success fw-bold py-3">
+                    > Access Information
+                </div>
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+                        <label class="text-secondary small text-uppercase ls-1">Global IP Address</label>
+                        <div class="d-flex align-items-center mt-2">
+                            <span class="h2 text-light font-monospace mb-0" th:text="${clientIp}">Loading...</span>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success ms-3">Current</span>
+                        </div>
+                    </div>
+
+                    <hr class="border-secondary opacity-50 my-4">
+
+                    <div class="mb-4">
+                        <label class="text-secondary small text-uppercase ls-1">Remote Hostname</label>
+                        <p class="h5 text-light font-monospace mt-2" th:text="${clientHost}">Loading...</p>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="text-secondary small text-uppercase ls-1">User Agent</label>
+                        <div class="bg-secondary bg-opacity-10 rounded p-3 mt-2">
+                            <code class="text-secondary text-break" th:text="${userAgent}">Loading...</code>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer bg-transparent border-secondary text-end py-3">
+                    <small class="text-secondary">Detected by MAIOTANetwork System</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

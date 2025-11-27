@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}">
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
 <head>
     <title>Works | MAIOTANetwork</title>
 </head>
@@ -24,7 +24,7 @@
                 現在接続しているネットワークのグローバルIPアドレスと、ホスト名を表示する簡易診断ツールです。
                 サーバーへのアクセス元情報の確認に使用します。
             </p>
-            <a href="#" class="text-success text-decoration-underline">ツールを開く →</a>
+            <a href="/tools/ip-checker" class="text-success text-decoration-underline">ツールを開く →</a>
         </div>
     </div>
 

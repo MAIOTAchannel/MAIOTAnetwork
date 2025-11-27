@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}">
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
 <head>
     <title>MAIOTANetwork</title>
+    <style>
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        .hover-green:hover { color: #198754 !important; }
+    </style>
 </head>
 <body>
 
@@ -51,18 +56,12 @@
                 <ul class="list-unstyled">
                     <li class="mb-2"><a href="/about" class="text-decoration-none text-light hover-green">→ Profile</a></li>
                     <li class="mb-2"><a href="/tools" class="text-decoration-none text-light hover-green">→ Works</a></li>
-                    <li class="mb-2"><a href="https://github.com" target="_blank" class="text-decoration-none text-light hover-green">→ GitHub</a></li>
+                    <li class="mb-2"><a href="https://github.com/MAIOTAchannel" target="_blank" class="text-decoration-none text-light hover-green">→ GitHub</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .blink { animation: blinker 1s linear infinite; }
-    @keyframes blinker { 50% { opacity: 0; } }
-    .hover-green:hover { color: #198754 !important; }
-</style>
 
 </body>
 </html>
