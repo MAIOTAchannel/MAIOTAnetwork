@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>Post Editor | CMS</title>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="text-light mb-4">New Post</h2>
+
+    <div class="card bg-black border border-secondary p-4">
+        <form th:action="@{/admin/post/save}" method="post" th:object="${post}">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3">
+                <label class="text-light form-label">Title</label>
+                <label>
+                    <input type="text" th:field="*{title}" class="form-control bg-dark text-light border-secondary" required>
+                </label>
+            </div>
+
+            <div class="mb-3">
+                <label class="text-light form-label">Content</label>
+                <label>
+                    <textarea th:field="*{content}" rows="10" class="form-control bg-dark text-light border-secondary"></textarea>
+                </label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" th:field="*{published}" id="isPublished">
+                <label class="form-check-label text-light" for="isPublished">
+                    Publish immediately (公開する)
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Post</button>
+            <a href="/admin" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

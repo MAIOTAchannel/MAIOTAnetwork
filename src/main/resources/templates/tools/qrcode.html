@@ -25,7 +25,7 @@
             <div class="card bg-black border border-secondary shadow-lg">
                 <div class="card-body p-4">
 
-                    <form action="/tools/qrcode" method="post" class="mb-4">
+                    <form th:action="@{/tools/qrcode}" method="post" class="mb-4">
                         <div class="mb-3">
                             <label for="inputText" class="form-label text-secondary small text-uppercase">Input Text / URL</label>
                             <input type="text" class="form-control bg-dark text-light border-secondary"

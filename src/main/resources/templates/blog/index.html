@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: layout(~{::title}, ~{::body})}" lang="ja">
+<head>
+    <title>Blog | MAIOTANetwork</title>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="mb-4 text-light border-start border-4 border-success ps-3">Blog</h2>
+
+    <div class="row">
+        <div class="col-lg-8" th:each="post : ${posts}">
+            <div class="card bg-black border border-secondary mb-4">
+                <div class="card-body">
+                    <h3 class="card-title text-light" th:text="${post.title}">Title</h3>
+                    <p class="text-secondary small" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">Date</p>
+                    <p class="card-text text-secondary text-truncate" th:text="${post.content}">Content preview...</p>
+                    <a th:href="@{/blog/{id}(id=${post.id})}" class="text-success">Read More &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
